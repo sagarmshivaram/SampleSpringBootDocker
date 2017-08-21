@@ -16,6 +16,11 @@ public class SpringBootDockerApplication {
 	
 	@GetMapping(value="/")
 	public String start(){
+		print();
 		return "working";
+	}
+
+	private void print(){
+		System.out.println("Finally you got it figured");
 	}
 }
