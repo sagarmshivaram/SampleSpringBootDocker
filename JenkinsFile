@@ -8,8 +8,7 @@ node {
     }
 	
 	stage ('Initialize') {
-		echo "PATH = %PATH%"
-		echo "M2_HOME = %M2_HOME%"
+	    mvnHome = tool 'Maven'
     }
 
 	
@@ -17,6 +16,11 @@ node {
         /* Let's make sure we have the repository cloned to our workspace */
 		echo 'This is a pipeline'
         /* sh 'mvn clean install' */
+        if (isUnix()) {
+                 sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean package"
+              } else {
+                 bat(/"${mvnHome}\bin\mvn" -Dmaven.test.failure.ignore clean install/)
+              }
     }
 	
 	stage('Build image') {
