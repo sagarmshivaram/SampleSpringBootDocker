@@ -8,26 +8,24 @@ node {
     }
 	
 		stage ('Initialize') {
-            steps {
                 sh '''
                     echo "PATH = %PATH%"
                     echo "M2_HOME = %M2_HOME%"
                 '''
-            }
         }
 
 	
 	stage('Build project') {
         /* Let's make sure we have the repository cloned to our workspace */
 
-        sh 'mvn clean install'
+        /* sh 'mvn clean install' */
     }
 	
     stage('Build image') {
         /* This builds the actual image; synonymous to
          * docker build on the command line */
 
-        app = docker.build(sample)
+        /* app = docker.build(sample) */
     }
 
     stage('Test image') {
@@ -44,9 +42,9 @@ node {
          * First, the incremental build number from Jenkins
          * Second, the 'latest' tag.
          * Pushing multiple tags is cheap, as all the layers are reused. */
-        docker.withRegistry('733387210490.dkr.ecr.us-west-2.amazonaws.com/applications', 'aws-credentials') {
+        /* docker.withRegistry('733387210490.dkr.ecr.us-west-2.amazonaws.com/applications', 'aws-credentials') {
             app.push("${env.BUILD_NUMBER}")
-            app.push("latest")
+            app.push("latest") */
         }
     }
 }
