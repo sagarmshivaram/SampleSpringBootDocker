@@ -6,6 +6,12 @@ node {
 
         checkout scm
     }
+	
+	stage('Build project') {
+        /* Let's make sure we have the repository cloned to our workspace */
+
+        mvnw clean install
+    }
 
     stage('Build image') {
         /* This builds the actual image; synonymous to
